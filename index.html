@@ -8,12 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -23,571 +18,348 @@
     --ink-dim:#8B97B0;
     --line:#1E2A44;
     --accent:#4FD1C5;
-    --accent2:#7C8CFF;
   }
+  *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
+    margin:0;
     background:var(--bg);
     color:var(--ink);
-    font-family:'Inter',sans-serif;
+    font-family:'Inter',Arial,sans-serif;
+    line-height:1.5;
   }
-  .font-display{font-family:'Space Grotesk',sans-serif;}
-  .font-mono{font-family:'JetBrains Mono',monospace;}
-
+  .display{font-family:'Space Grotesk',sans-serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
   ::selection{background:var(--accent);color:#04120F;}
 
-  .grid-fade{
-    background-image:
-      linear-gradient(to right, var(--line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--line) 1px, transparent 1px);
-    background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%);
-    mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%);
-  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px;}
 
-  .focus-ring:focus-visible{
-    outline:2px solid var(--accent);
-    outline-offset:3px;
+  header.nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(11,17,32,.85);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
   }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .nav-inner a.logo{font-family:'Space Grotesk',sans-serif;font-weight:600;text-decoration:none;color:var(--ink);}
+  .nav-inner a.logo span{color:var(--accent);}
+  nav.links{display:flex;gap:28px;}
+  nav.links a{font-size:14px;color:var(--ink-dim);text-decoration:none;}
+  nav.links a:hover{color:var(--ink);}
+  @media (max-width:700px){ nav.links{display:none;} }
 
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-  }
+  section{padding:72px 0;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
 
-  .reveal{
-    opacity:0;
-    transform: translateY(14px);
-    transition: opacity .6s ease, transform .6s ease;
-  }
-  .reveal.in{
-    opacity:1;
-    transform: translateY(0);
-  }
+  .hero{padding-top:80px;padding-bottom:96px;}
+  .eyebrow{color:var(--accent);font-size:14px;margin:0 0 18px;}
+  h1{font-size:56px;line-height:1.05;margin:0;max-width:680px;}
+  .subtitle{color:var(--ink-dim);font-size:20px;max-width:600px;margin:22px 0 0;}
+  .summary{color:var(--ink-dim);max-width:560px;margin:22px 0 0;}
 
-  .card-line{
-    border-left:1px solid var(--line);
+  .cta-row{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:12px 22px;border-radius:6px;text-decoration:none;
+    font-weight:500;font-size:15px;
   }
+  .btn-primary{background:var(--accent);color:#04120F;}
+  .btn-secondary{border:1px solid var(--line);color:var(--ink);}
 
-  code, .tag{
-    font-family:'JetBrains Mono',monospace;
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);max-width:520px;
+    margin-top:56px;padding-top:28px;border-top:1px solid var(--line);gap:12px;}
+  .stat-value{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:32px;}
+  .stat-label{color:var(--ink-dim);font-size:12px;margin-top:4px;}
+
+  .grid2{display:grid;grid-template-columns:160px 1fr;gap:40px;}
+  @media (max-width:700px){ .grid2{grid-template-columns:1fr;} }
+  .label-row{display:flex;align-items:center;gap:12px;}
+  .label-row span.tag-label{color:var(--accent);font-size:13px;}
+  .label-row .rule{flex:1;height:1px;background:var(--line);}
+
+  .edu-item{padding:20px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .edu-item:last-child{border-bottom:none;}
+  .edu-item h3{margin:0;font-size:17px;}
+  .edu-item p{margin:4px 0 0;color:var(--ink-dim);font-size:14px;}
+  .edu-right{text-align:right;}
+  .edu-right .period{color:var(--accent);font-size:14px;}
+
+  .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;}
+  @media (max-width:600px){ .skills-grid{grid-template-columns:1fr;} }
+  .skill-cat h3{font-size:12px;color:var(--ink-dim);margin:0 0 10px;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{font-size:12px;padding:5px 10px;border:1px solid var(--line);border-radius:5px;background:var(--bg-raise);}
+
+  .project{border:1px solid var(--line);border-radius:10px;padding:26px;background:var(--bg-raise);margin-bottom:20px;}
+  .project-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .project h3{margin:0;font-size:20px;}
+  .project .period{color:var(--ink-dim);font-size:13px;}
+  .project ul{margin:0 0 16px;padding-left:18px;color:var(--ink-dim);font-size:14px;}
+  .project ul li{margin-bottom:6px;}
+  .project .tags{margin-bottom:16px;}
+  .project-links a{margin-right:20px;font-size:14px;text-decoration:none;}
+  .project-links a.demo{color:var(--accent);}
+  .project-links a.code{color:var(--ink-dim);}
+
+  .cert-item{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:18px 0;border-bottom:1px solid var(--line);}
+  .cert-item:last-child{border-bottom:none;}
+  .cert-right{display:flex;gap:16px;align-items:center;font-size:14px;}
+  .cert-right .date{color:var(--ink-dim);}
+  .cert-right a{color:var(--accent);text-decoration:none;}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+  @media (max-width:700px){ .contact-grid{grid-template-columns:1fr;} }
+  .contact-list{list-style:none;padding:0;margin:16px 0 0;}
+  .contact-list li{margin-bottom:10px;font-size:14px;}
+  .contact-list a{text-decoration:none;color:var(--accent);}
+
+  form label{display:block;font-size:12px;color:var(--ink-dim);margin-bottom:6px;}
+  form input, form textarea{
+    width:100%;background:transparent;border:1px solid var(--line);border-radius:6px;
+    padding:10px 12px;color:var(--ink);font-family:inherit;font-size:14px;margin-bottom:16px;
   }
+  form button{
+    background:var(--accent);color:#04120F;border:none;border-radius:6px;
+    padding:11px 22px;font-weight:500;font-size:14px;cursor:pointer;
+  }
+  .form-note{font-size:12px;color:var(--ink-dim);margin-top:10px;}
+
+  footer{padding:36px 0;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+    color:var(--ink-dim);font-size:12px;}
 </style>
 </head>
 <body>
-<div id="root"></div>
 
-<script type="text/babel" data-presets="react">
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo">Srija<span>.</span></a>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#certs">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
 
-const { useEffect, useRef, useState } = React;
-
-/* ---------- DATA (from resume) ---------- */
-
-const PROFILE = {
-  name: "L. Gayathri Srija",
-  location: "Vijayawada, India",
-  title: "Computer Science Undergraduate — AI & Web Development",
-  email: "srijavarma2006@gmail.com",
-  phone: "+91 7799777912",
-  linkedin: "#",
-  github: "#",
-  summary:
-    "Computer Science undergraduate at KL University with hands-on experience building AI-powered, full-stack web applications — from phishing detection to government scheme recommendation systems. Comfortable across the stack: Python and ML for the intelligence layer, React and Node for the product layer, deployed and shipped on Vercel and Render.",
-};
-
-const STATS = [
-  { value: "8.53", label: "CGPA, B.Tech CSE" },
-  { value: "03", label: "Shipped AI/web projects" },
-  { value: "02", label: "Professional certifications" },
-];
-
-const EDUCATION = [
-  {
-    place: "Koneru Lakshmaiah Education Foundation (KL University)",
-    course: "B.Tech, Computer Science & Engineering",
-    period: "2023 — 2027",
-    detail: "CGPA 8.53",
-  },
-  {
-    place: "Sri Sarada Junior College",
-    course: "Intermediate (BIPC)",
-    period: "2021 — 2023",
-    detail: "93.6%",
-  },
-  {
-    place: "Ravindra Bharathi Public School",
-    course: "Secondary School Certificate (SSC)",
-    period: "2020 — 2021",
-    detail: "CGPA 9.95",
-  },
-];
-
-const SKILLS = [
-  { cat: "Languages", items: ["Python", "SQL", "Java", "C"] },
-  { cat: "Frontend", items: ["React.js", "HTML", "CSS", "JavaScript", "Tailwind CSS"] },
-  { cat: "Backend & Cloud", items: ["Node.js", "Express.js", "Vercel", "Render"] },
-  { cat: "Databases", items: ["MySQL", "MongoDB"] },
-  { cat: "Tools", items: ["Git", "GitHub", "Linux"] },
-  { cat: "Core Concepts", items: ["OOP", "DSA", "DBMS", "Operating Systems"] },
-];
-
-const PROJECTS = [
-  {
-    title: "AI Phishing and Threat Analyzer",
-    period: "Jun 2025 — Jan 2026",
-    points: [
-      "Detects phishing attempts across emails, SMS, and URLs using AI-based content analysis",
-      "Integrates Google Gemini API to classify threat risk (Low / Medium / High) with flagged red flags",
-      "Serverless backend on Vercel with secure API key handling",
-    ],
-    tech: ["TypeScript", "Node.js", "Vercel Functions", "Gemini API"],
-    demo: "#",
-    code: "#",
-  },
-  {
-    title: "AI-Based Government Scheme Navigator",
-    period: "Dec 2025 — Feb 2026",
-    points: [
-      "Recommends Central and AP government welfare schemes based on age, income, and occupation",
-      "Combines rule-based filtering with ML-based ranking using cosine similarity",
-      "Admin dashboard with bar and pie chart visualizations of eligibility trends",
-    ],
-    tech: ["Python", "scikit-learn", "Streamlit", "Pandas"],
-    demo: "#",
-    code: "#",
-  },
-  {
-    title: "CampusConnect — Lost Item & Complaint Portal",
-    period: "Mar 2026 — May 2026",
-    points: [
-      "Full-stack app for reporting lost/found items and campus complaints with real-time status tracking",
-      "REST APIs built with Node.js and Express, MongoDB for persistence",
-      "Frontend on Vercel, backend on Render, database on MongoDB Atlas",
-    ],
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"],
-    demo: "#",
-    code: "#",
-  },
-];
-
-const CERTS = [
-  {
-    name: "Automation Anywhere RPA Professional Certification",
-    date: "January 2026",
-  },
-  {
-    name: "AWS Certified Cloud Practitioner Badge",
-    date: "May 2025",
-  },
-];
-
-const CODING = [
-  { platform: "LeetCode", note: "Arrays, Strings, Searching, Sorting, OOP" },
-  { platform: "HackerRank", note: "Python problem solving" },
-];
-
-/* ---------- HELPERS ---------- */
-
-function useReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add("in");
-            obs.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  return ref;
-}
-
-function Reveal({ children, className = "", delay = 0 }) {
-  const ref = useReveal();
-  return (
-    <div ref={ref} className={"reveal " + className} style={{ transitionDelay: delay + "ms" }}>
-      {children}
+<section class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow mono">Vijayawada, India</p>
+    <h1 class="display">L. Gayathri Srija</h1>
+    <p class="subtitle">Computer Science Undergraduate — AI &amp; Web Development</p>
+    <p class="summary">Computer Science undergraduate at KL University with hands-on experience building AI-powered, full-stack web applications — from phishing detection to government scheme recommendation systems. Comfortable across the stack: Python and ML for the intelligence layer, React and Node for the product layer, deployed and shipped on Vercel and Render.</p>
+    <div class="cta-row">
+      <a href="#projects" class="btn btn-primary">View projects</a>
+      <a href="#contact" class="btn btn-secondary">Get in touch</a>
     </div>
-  );
-}
-
-function SectionLabel({ children }) {
-  return (
-    <div className="flex items-center gap-3 mb-8">
-      <span className="font-mono text-xs text-[var(--accent)]">{children}</span>
-      <span className="h-px flex-1 bg-[var(--line)]"></span>
+    <div class="stats">
+      <div><div class="stat-value display">8.53</div><div class="stat-label">CGPA, B.Tech CSE</div></div>
+      <div><div class="stat-value display">03</div><div class="stat-label">Shipped AI/web projects</div></div>
+      <div><div class="stat-value display">02</div><div class="stat-label">Professional certifications</div></div>
     </div>
-  );
-}
+  </div>
+</section>
 
-/* ---------- SECTIONS ---------- */
+<section id="about">
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">01 — About</span><span class="rule"></span></div>
+    <div>
+      <p style="max-width:560px;">I build software where the intelligence layer and the product layer meet — training a ranking model isn't the finish line if nobody can use it, so every project here ships as a working app, not a notebook. My core strength is Python and machine learning for the logic, paired with React and Node for the interface people actually touch.</p>
+      <p style="max-width:560px;color:var(--ink-dim);">Outside of coursework, I practice on LeetCode and HackerRank to stay sharp on arrays, strings, searching, sorting, and object-oriented design — the fundamentals that make the larger systems hold together.</p>
+    </div>
+  </div>
+</section>
 
-function NavBar() {
-  const links = [
-    ["About", "#about"],
-    ["Education", "#education"],
-    ["Skills", "#skills"],
-    ["Projects", "#projects"],
-    ["Certifications", "#certs"],
-    ["Contact", "#contact"],
-  ];
-  const [open, setOpen] = useState(false);
-  return (
-    <header className="sticky top-0 z-40 backdrop-blur bg-[#0B1120]/80 border-b border-[var(--line)]">
-      <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#top" className="font-display font-semibold tracking-tight text-[var(--ink)] focus-ring rounded">
-          Srija<span className="text-[var(--accent)]">.</span>
-        </a>
-        <nav className="hidden md:flex gap-7 font-mono text-sm text-[var(--ink-dim)]">
-          {links.map(([label, href]) => (
-            <a key={href} href={href} className="hover:text-[var(--ink)] transition-colors focus-ring rounded">
-              {label}
-            </a>
-          ))}
-        </nav>
-        <button
-          className="md:hidden text-[var(--ink)] focus-ring rounded p-1"
-          aria-label="Toggle menu"
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? "✕" : "☰"}
-        </button>
-      </div>
-      {open && (
-        <nav className="md:hidden flex flex-col gap-1 px-6 pb-4 font-mono text-sm text-[var(--ink-dim)]">
-          {links.map(([label, href]) => (
-            <a key={href} href={href} onClick={() => setOpen(false)} className="py-2 border-b border-[var(--line)]">
-              {label}
-            </a>
-          ))}
-        </nav>
-      )}
-    </header>
-  );
-}
-
-function Hero() {
-  return (
-    <section id="top" className="relative pt-20 pb-24 px-6 overflow-hidden">
-      <div className="absolute inset-0 grid-fade pointer-events-none"></div>
-      <div className="max-w-5xl mx-auto relative">
-        <p className="font-mono text-sm text-[var(--accent)] mb-5">{PROFILE.location}</p>
-        <h1 className="font-display font-semibold text-5xl sm:text-6xl md:text-7xl leading-[1.05] tracking-tight max-w-3xl">
-          {PROFILE.name}
-        </h1>
-        <p className="mt-6 text-lg sm:text-xl text-[var(--ink-dim)] max-w-2xl">
-          {PROFILE.title}
-        </p>
-        <p className="mt-6 text-base text-[var(--ink-dim)] max-w-xl leading-relaxed">
-          {PROFILE.summary}
-        </p>
-
-        <div className="mt-10 flex flex-wrap gap-4">
-          <a
-            href="#projects"
-            className="focus-ring rounded-md px-5 py-3 bg-[var(--accent)] text-[#04120F] font-medium hover:brightness-110 transition"
-          >
-            View projects
-          </a>
-          <a
-            href="#contact"
-            className="focus-ring rounded-md px-5 py-3 border border-[var(--line)] text-[var(--ink)] hover:border-[var(--accent)] transition"
-          >
-            Get in touch
-          </a>
+<section id="education">
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">02 — Education</span><span class="rule"></span></div>
+    <div>
+      <div class="edu-item">
+        <div>
+          <h3 class="display">Koneru Lakshmaiah Education Foundation (KL University)</h3>
+          <p>B.Tech, Computer Science &amp; Engineering</p>
         </div>
-
-        <dl className="mt-16 grid grid-cols-3 max-w-xl border-t border-[var(--line)] pt-8">
-          {STATS.map((s) => (
-            <div key={s.label} className="pr-4">
-              <dt className="font-display text-3xl sm:text-4xl font-semibold text-[var(--ink)]">{s.value}</dt>
-              <dd className="mt-1 text-xs text-[var(--ink-dim)] leading-snug">{s.label}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </section>
-  );
-}
-
-function About() {
-  return (
-    <section id="about" className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>01 — About</SectionLabel>
-        <Reveal>
-          <p className="text-lg leading-relaxed text-[var(--ink)] max-w-2xl">
-            I build software where the intelligence layer and the product layer meet — training a
-            ranking model isn't the finish line if nobody can use it, so every project here ships as a
-            working app, not a notebook. My core strength is Python and machine learning for the logic,
-            paired with React and Node for the interface people actually touch.
-          </p>
-          <p className="mt-5 text-[var(--ink-dim)] leading-relaxed max-w-2xl">
-            Outside of coursework, I practice on LeetCode and HackerRank to stay sharp on arrays,
-            strings, searching, sorting, and object-oriented design — the fundamentals that make the
-            larger systems hold together.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Education() {
-  return (
-    <section id="education" className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>02 — Education</SectionLabel>
-        <div className="space-y-0">
-          {EDUCATION.map((e, i) => (
-            <Reveal key={e.place} delay={i * 80}>
-              <div className="card-line pl-6 py-6 border-b border-[var(--line)] last:border-b-0 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                <div>
-                  <h3 className="font-display text-lg font-medium text-[var(--ink)]">{e.place}</h3>
-                  <p className="text-sm text-[var(--ink-dim)] mt-1">{e.course}</p>
-                </div>
-                <div className="text-right sm:text-right shrink-0">
-                  <p className="font-mono text-sm text-[var(--accent)]">{e.period}</p>
-                  <p className="text-sm text-[var(--ink-dim)] mt-1">{e.detail}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+        <div class="edu-right">
+          <p class="period mono">2023 — 2027</p>
+          <p>CGPA 8.53</p>
         </div>
       </div>
-    </section>
-  );
-}
-
-function Skills() {
-  return (
-    <section id="skills" className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>03 — Skills</SectionLabel>
-        <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8">
-          {SKILLS.map((s, i) => (
-            <Reveal key={s.cat} delay={i * 60}>
-              <h3 className="font-mono text-xs text-[var(--ink-dim)] uppercase-none mb-3">
-                {s.cat}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {s.items.map((it) => (
-                  <span
-                    key={it}
-                    className="tag text-xs px-2.5 py-1 rounded border border-[var(--line)] text-[var(--ink)] bg-[var(--bg-raise)]"
-                  >
-                    {it}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
-          ))}
+      <div class="edu-item">
+        <div>
+          <h3 class="display">Sri Sarada Junior College</h3>
+          <p>Intermediate (BIPC)</p>
+        </div>
+        <div class="edu-right">
+          <p class="period mono">2021 — 2023</p>
+          <p>93.6%</p>
         </div>
       </div>
-    </section>
-  );
-}
-
-function ProjectCard({ p, index }) {
-  return (
-    <Reveal delay={index * 80}>
-      <article className="border border-[var(--line)] rounded-lg p-7 bg-[var(--bg-raise)] hover:border-[var(--accent)]/60 transition-colors">
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
-          <h3 className="font-display text-xl font-medium text-[var(--ink)]">{p.title}</h3>
-          <span className="font-mono text-xs text-[var(--ink-dim)] shrink-0">{p.period}</span>
+      <div class="edu-item">
+        <div>
+          <h3 class="display">Ravindra Bharathi Public School</h3>
+          <p>Secondary School Certificate (SSC)</p>
         </div>
-        <ul className="space-y-2 mb-5">
-          {p.points.map((pt) => (
-            <li key={pt} className="text-sm text-[var(--ink-dim)] leading-relaxed pl-4 relative">
-              <span className="absolute left-0 top-[0.6em] w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
-              {pt}
-            </li>
-          ))}
+        <div class="edu-right">
+          <p class="period mono">2020 — 2021</p>
+          <p>CGPA 9.95</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">03 — Skills</span><span class="rule"></span></div>
+    <div class="skills-grid">
+      <div class="skill-cat"><h3 class="mono">LANGUAGES</h3><div class="tags">
+        <span class="tag mono">Python</span><span class="tag mono">SQL</span><span class="tag mono">Java</span><span class="tag mono">C</span>
+      </div></div>
+      <div class="skill-cat"><h3 class="mono">FRONTEND</h3><div class="tags">
+        <span class="tag mono">React.js</span><span class="tag mono">HTML</span><span class="tag mono">CSS</span><span class="tag mono">JavaScript</span><span class="tag mono">Tailwind CSS</span>
+      </div></div>
+      <div class="skill-cat"><h3 class="mono">BACKEND &amp; CLOUD</h3><div class="tags">
+        <span class="tag mono">Node.js</span><span class="tag mono">Express.js</span><span class="tag mono">Vercel</span><span class="tag mono">Render</span>
+      </div></div>
+      <div class="skill-cat"><h3 class="mono">DATABASES</h3><div class="tags">
+        <span class="tag mono">MySQL</span><span class="tag mono">MongoDB</span>
+      </div></div>
+      <div class="skill-cat"><h3 class="mono">TOOLS</h3><div class="tags">
+        <span class="tag mono">Git</span><span class="tag mono">GitHub</span><span class="tag mono">Linux</span>
+      </div></div>
+      <div class="skill-cat"><h3 class="mono">CORE CONCEPTS</h3><div class="tags">
+        <span class="tag mono">OOP</span><span class="tag mono">DSA</span><span class="tag mono">DBMS</span><span class="tag mono">Operating Systems</span>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">04 — Projects</span><span class="rule"></span></div>
+    <div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3 class="display">AI Phishing and Threat Analyzer</h3>
+          <span class="period mono">Jun 2025 — Jan 2026</span>
+        </div>
+        <ul>
+          <li>Detects phishing attempts across emails, SMS, and URLs using AI-based content analysis</li>
+          <li>Integrates Google Gemini API to classify threat risk (Low / Medium / High) with flagged red flags</li>
+          <li>Serverless backend on Vercel with secure API key handling</li>
         </ul>
-        <div className="flex flex-wrap gap-2 mb-5">
-          {p.tech.map((t) => (
-            <span key={t} className="tag text-xs px-2 py-1 rounded border border-[var(--line)] text-[var(--ink-dim)]">
-              {t}
-            </span>
-          ))}
+        <div class="tags">
+          <span class="tag mono">TypeScript</span><span class="tag mono">Node.js</span><span class="tag mono">Vercel Functions</span><span class="tag mono">Gemini API</span>
         </div>
-        <div className="flex gap-5 font-mono text-sm">
-          <a href={p.demo} className="text-[var(--accent)] hover:underline focus-ring rounded">Live demo</a>
-          <a href={p.code} className="text-[var(--ink-dim)] hover:text-[var(--ink)] focus-ring rounded">Source</a>
+        <div class="project-links"><a href="#" class="demo">Live demo</a><a href="#" class="code">Source</a></div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3 class="display">AI-Based Government Scheme Navigator</h3>
+          <span class="period mono">Dec 2025 — Feb 2026</span>
         </div>
-      </article>
-    </Reveal>
-  );
-}
-
-function Projects() {
-  return (
-    <section id="projects" className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>04 — Projects</SectionLabel>
-        <div className="space-y-6">
-          {PROJECTS.map((p, i) => (
-            <ProjectCard p={p} index={i} key={p.title} />
-          ))}
+        <ul>
+          <li>Recommends Central and AP government welfare schemes based on age, income, and occupation</li>
+          <li>Combines rule-based filtering with ML-based ranking using cosine similarity</li>
+          <li>Admin dashboard with bar and pie chart visualizations of eligibility trends</li>
+        </ul>
+        <div class="tags">
+          <span class="tag mono">Python</span><span class="tag mono">scikit-learn</span><span class="tag mono">Streamlit</span><span class="tag mono">Pandas</span>
         </div>
+        <div class="project-links"><a href="#" class="demo">Live demo</a><a href="#" class="code">Source</a></div>
       </div>
-    </section>
-  );
-}
 
-function Coding() {
-  return (
-    <section className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>05 — Coding practice</SectionLabel>
-        <Reveal>
-          <div className="flex flex-wrap gap-4">
-            {CODING.map((c) => (
-              <div key={c.platform} className="border border-[var(--line)] rounded-lg px-5 py-4 bg-[var(--bg-raise)]">
-                <p className="font-display font-medium text-[var(--ink)]">{c.platform}</p>
-                <p className="text-sm text-[var(--ink-dim)] mt-1">{c.note}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Certifications() {
-  return (
-    <section id="certs" className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>06 — Certifications</SectionLabel>
-        <div className="space-y-0">
-          {CERTS.map((c, i) => (
-            <Reveal key={c.name} delay={i * 80}>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 py-5 border-b border-[var(--line)] last:border-b-0">
-                <p className="text-[var(--ink)]">{c.name}</p>
-                <div className="flex items-center gap-4 shrink-0">
-                  <span className="font-mono text-sm text-[var(--ink-dim)]">{c.date}</span>
-                  <a href="#" className="font-mono text-sm text-[var(--accent)] hover:underline focus-ring rounded">
-                    View credential
-                  </a>
-                </div>
-              </div>
-            </Reveal>
-          ))}
+      <div class="project">
+        <div class="project-head">
+          <h3 class="display">CampusConnect — Lost Item &amp; Complaint Portal</h3>
+          <span class="period mono">Mar 2026 — May 2026</span>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function Contact() {
-  const [status, setStatus] = useState("idle");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    // Replace the action URL below with your own Formspree/EmailJS endpoint.
-    setStatus("sent");
-  }
-
-  return (
-    <section id="contact" className="py-20 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto grid md:grid-cols-[160px_1fr] gap-10">
-        <SectionLabel>07 — Contact</SectionLabel>
-        <div className="grid sm:grid-cols-2 gap-12">
-          <Reveal>
-            <h3 className="font-display text-2xl font-medium text-[var(--ink)] mb-4">
-              Open to opportunities in AI-powered analytics and full-stack roles.
-            </h3>
-            <ul className="space-y-2 font-mono text-sm">
-              <li>
-                <a href={"mailto:" + PROFILE.email} className="text-[var(--accent)] hover:underline focus-ring rounded">
-                  {PROFILE.email}
-                </a>
-              </li>
-              <li className="text-[var(--ink-dim)]">{PROFILE.phone}</li>
-              <li>
-                <a href={PROFILE.linkedin} className="text-[var(--ink-dim)] hover:text-[var(--ink)] focus-ring rounded">
-                  LinkedIn ↗
-                </a>
-              </li>
-              <li>
-                <a href={PROFILE.github} className="text-[var(--ink-dim)] hover:text-[var(--ink)] focus-ring rounded">
-                  GitHub ↗
-                </a>
-              </li>
-            </ul>
-          </Reveal>
-
-          <Reveal delay={100}>
-            {status === "sent" ? (
-              <p className="text-[var(--accent)]">
-                Message sent — thanks for reaching out. I'll reply by email shortly.
-              </p>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-mono text-[var(--ink-dim)] mb-1.5" htmlFor="name">Name</label>
-                  <input id="name" required className="focus-ring w-full bg-transparent border border-[var(--line)] rounded-md px-3 py-2.5 text-[var(--ink)]" />
-                </div>
-                <div>
-                  <label className="block text-xs font-mono text-[var(--ink-dim)] mb-1.5" htmlFor="email">Email</label>
-                  <input id="email" type="email" required className="focus-ring w-full bg-transparent border border-[var(--line)] rounded-md px-3 py-2.5 text-[var(--ink)]" />
-                </div>
-                <div>
-                  <label className="block text-xs font-mono text-[var(--ink-dim)] mb-1.5" htmlFor="message">Message</label>
-                  <textarea id="message" required rows="4" className="focus-ring w-full bg-transparent border border-[var(--line)] rounded-md px-3 py-2.5 text-[var(--ink)]"></textarea>
-                </div>
-                <button type="submit" className="focus-ring rounded-md px-5 py-2.5 bg-[var(--accent)] text-[#04120F] font-medium hover:brightness-110 transition">
-                  Send message
-                </button>
-                <p className="text-xs text-[var(--ink-dim)]">
-                  Wire this form to Formspree or EmailJS to receive messages — no backend required.
-                </p>
-              </form>
-            )}
-          </Reveal>
+        <ul>
+          <li>Full-stack app for reporting lost/found items and campus complaints with real-time status tracking</li>
+          <li>REST APIs built with Node.js and Express, MongoDB for persistence</li>
+          <li>Frontend on Vercel, backend on Render, database on MongoDB Atlas</li>
+        </ul>
+        <div class="tags">
+          <span class="tag mono">React</span><span class="tag mono">Node.js</span><span class="tag mono">Express.js</span><span class="tag mono">MongoDB</span><span class="tag mono">Tailwind CSS</span>
         </div>
+        <div class="project-links"><a href="#" class="demo">Live demo</a><a href="#" class="code">Source</a></div>
       </div>
-    </section>
-  );
-}
 
-function Footer() {
-  return (
-    <footer className="py-10 px-6 border-t border-[var(--line)]">
-      <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between gap-3 text-xs font-mono text-[var(--ink-dim)]">
-        <p>© {new Date().getFullYear()} {PROFILE.name}</p>
-        <p>Built with React &amp; Tailwind CSS</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">05 — Coding practice</span><span class="rule"></span></div>
+    <div class="tags" style="gap:16px;">
+      <div class="tag" style="padding:14px 18px;">
+        <div class="display" style="font-weight:600;">LeetCode</div>
+        <div style="color:var(--ink-dim);font-size:13px;margin-top:4px;">Arrays, Strings, Searching, Sorting, OOP</div>
       </div>
-    </footer>
-  );
-}
+      <div class="tag" style="padding:14px 18px;">
+        <div class="display" style="font-weight:600;">HackerRank</div>
+        <div style="color:var(--ink-dim);font-size:13px;margin-top:4px;">Python problem solving</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-function App() {
-  return (
-    <>
-      <NavBar />
-      <Hero />
-      <About />
-      <Education />
-      <Skills />
-      <Projects />
-      <Coding />
-      <Certifications />
-      <Contact />
-      <Footer />
-    </>
-  );
-}
+<section id="certs">
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">06 — Certifications</span><span class="rule"></span></div>
+    <div>
+      <div class="cert-item">
+        <p>Automation Anywhere RPA Professional Certification</p>
+        <div class="cert-right"><span class="date mono">January 2026</span><a href="#">View credential</a></div>
+      </div>
+      <div class="cert-item">
+        <p>AWS Certified Cloud Practitioner Badge</p>
+        <div class="cert-right"><span class="date mono">May 2025</span><a href="#">View credential</a></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
-</script>
+<section id="contact">
+  <div class="wrap grid2">
+    <div class="label-row"><span class="tag-label mono">07 — Contact</span><span class="rule"></span></div>
+    <div class="contact-grid">
+      <div>
+        <h3 class="display" style="font-size:22px;">Open to opportunities in AI-powered analytics and full-stack roles.</h3>
+        <ul class="contact-list mono">
+          <li><a href="mailto:srijavarma2006@gmail.com">srijavarma2006@gmail.com</a></li>
+          <li style="color:var(--ink-dim);">+91 7799777912</li>
+          <li><a href="#" style="color:var(--ink-dim);">LinkedIn ↗</a></li>
+          <li><a href="#" style="color:var(--ink-dim);">GitHub ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <form onsubmit="document.getElementById('formMsg').style.display='block'; this.style.display='none'; return false;">
+          <label for="name">Name</label>
+          <input id="name" required />
+          <label for="email">Email</label>
+          <input id="email" type="email" required />
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" required></textarea>
+          <button type="submit">Send message</button>
+          <p class="form-note">Wire this form to Formspree or EmailJS to receive messages — no backend required.</p>
+        </form>
+        <p id="formMsg" style="display:none;color:var(--accent);">Message sent — thanks for reaching out. I'll reply by email shortly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p>© 2026 L. Gayathri Srija</p>
+  <p>Built with HTML, CSS &amp; JavaScript</p>
+</footer>
+
 </body>
 </html>
