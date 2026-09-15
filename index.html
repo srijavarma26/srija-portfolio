@@ -19,6 +19,51 @@
     --line:#1E2A44;
     --accent:#4FD1C5;
   }
+  .status{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--accent);
+  font-size:13px;
+  margin-bottom:28px;
+}
+
+.status-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 12px var(--accent);
+  animation:pulse 1.8s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+  }
+
+  50%{
+    opacity:.4;
+    transform:scale(.8);
+  }
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero .subtitle strong{
+  color:var(--ink);
+  font-weight:500;
+}
+
+.hero-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:30px;
+}
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
